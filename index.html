@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Evaluación · Itinerario</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <noscript>
+    <div class="noscript">Activa JavaScript para usar esta web.</div>
+  </noscript>
+
+  <div class="toastHost" id="toastHost" aria-live="polite" aria-atomic="true"></div>
+
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="dot"></div>
+        <div class="brandText">
+          <div class="brandTitle">Evaluación</div>
+          <div class="brandSub">Formulario</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- STEP 1: Bienvenida -->
+    <section class="step is-active" id="step-welcome" data-step="1">
+      <div class="card">
+        <h1 class="h1">Bienvenida</h1>
+        <p class="p">
+          Responde con sinceridad, tu opinion cuenta para esta evaluacion, exitos.
+        </p>
+
+        <form id="welcomeForm" class="form" autocomplete="on" novalidate>
+          <div class="field">
+            <label for="wNombre">Nombre y Apellido</label>
+            <input id="wNombre" name="nombre" type="text" placeholder="Tu nombre" required />
+            <div class="hint" id="hintNombre">Mínimo tu nombre.</div>
+          </div>
+
+          <div class="field">
+            <label for="wCelular">Celular</label>
+            <input id="wCelular" name="celular" type="tel" inputmode="tel" placeholder="Ej: 999999999" required />
+            <div class="hint" id="hintCelular">Mínimo 9 caracteres.</div>
+          </div>
+
+          <div class="field">
+            <label for="wCorreo">Correo</label>
+            <input id="wCorreo" name="correo" type="email" placeholder="tu@correo.com" required />
+            <div class="hint" id="hintCorreo">Debe ser un correo válido.</div>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn primary" id="btnWelcomeNext" disabled>
+              Siguiente
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+<!-- STEP 1.5: Mensaje intermedio -->
+<section class="step" id="step-intermediate" data-step="1.5">
+  <div class="card">
+    <div class="badge">Antes de seguir…</div>
+
+    <h1 class="h1">Quiero que esto sea un respiro</h1>
+
+    <!-- Mensaje typewriter -->
+    <p class="p typewriter" id="interMsgTop"></p>
+
+    <!-- Mensaje final (aparece como bloque, no letra por letra) -->
+    <div class="quoteBox" id="quoteBox" style="display:none">
+      <div class="quoteMark">“</div>
+      <p class="quote" id="interMsgBottom">
+        A mi no me digas vamonos de fiesta, mejor dime llevame a conocer lugares magicos,
+        a divertirnos, a correr y a vivir muchas aventuras.
+      </p>
+    </div>
+
+    <!-- Botones aparecen después -->
+    <div class="actions two" id="interActions" style="display:none">
+      <button type="button" class="btn ghost" id="btnInterNo">No</button>
+      <button type="button" class="btn primary" id="btnInterGo">Ver que quiere este loco</button>
+    </div>
+  </div>
+</section>
+
+    <!-- STEP 2: Itinerario -->
+    <section class="step" id="step-itinerary" data-step="2">
+      <div class="card">
+        <div class="itHead">
+          <div class="chips" id="chips"></div>
+
+          <div class="progressRow">
+            <div class="progressTrack" aria-hidden="true">
+              <div class="progressBar" id="progressBar"></div>
+            </div>
+            <div class="counter" id="counter">1/5</div>
+          </div>
+        </div>
+
+        <div class="itBody">
+          <div class="slideWrap slideFade" id="slideFade">
+            <figure class="photoFrame">
+              <img id="slideImg" alt="" loading="eager" />
+              <div class="imgSkeleton" id="imgSkeleton">Cargando imagen…</div>
+            </figure>
+
+            <div class="slideText">
+              <div class="kicker" id="slideKicker">Lugar · Título</div>
+              <h2 class="h2" id="slideTitle">—</h2>
+              <p class="p" id="slideDesc">—</p>
+            </div>
+          </div>
+
+          <aside class="whatCard">
+            <div class="whatTitle">Qué haremos aquí</div>
+            <ul class="bullets" id="slideBullets"></ul>
+          </aside>
+        </div>
+
+        <div class="actions two">
+          <button type="button" class="btn ghost" id="btnPrev">Anterior</button>
+          <button type="button" class="btn primary" id="btnNext">Siguiente</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: Decisión -->
+    <section class="step" id="step-decision" data-step="3">
+      <div class="card center">
+        <h1 class="h1">¿Aceptas?</h1>
+        <p class="p muted">Elige una opción para continuar.</p>
+
+        <div class="actions stack">
+          <button type="button" class="btn ghost" id="btnNo">No</button>
+          <button type="button" class="btn ghost" id="btnPensar">Quiero pensarlo</button>
+          <button type="button" class="btn primary" id="btnSi">Sí</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4: Formulario final -->
+    <section class="step" id="step-final" data-step="4">
+      <div class="card">
+        <h1 class="h1">Formulario final</h1>
+        <div class="summary" id="summaryCard">
+          <div class="summaryTop">
+            <div class="pill">Servicio: <strong>Paquete premium</strong></div>
+            <div class="pill">Día: <strong>17 de enero</strong></div>
+          </div>
+          <div class="summaryLine">
+            <span class="muted">Datos del inicio:</span>
+            <strong id="summaryName">—</strong>
+            <span class="dotSep">•</span>
+            <strong id="summaryPhone">—</strong>
+            <span class="dotSep">•</span>
+            <strong id="summaryEmail">—</strong>
+          </div>
+        </div>
+        <p class="p muted">Completa lo que desees. Los datos principales son obligatorios.</p>
+
+        <form id="finalForm" class="form" novalidate>
+          <div class="grid2">
+            <div class="field">
+              <label for="fNombre">Nombres y Apellidos *</label>
+              <input id="fNombre" name="nombre" type="text" required />
+            </div>
+
+            <div class="field">
+              <label for="fTel">Teléfono de contacto *</label>
+              <input id="fTel" name="celular" type="tel" inputmode="tel" required />
+            </div>
+
+            <div class="field">
+              <label for="fCorreo">Correo electrónico *</label>
+              <input id="fCorreo" name="correo" type="email" required />
+            </div>
+
+            <div class="field">
+              <label for="fDni">DNI</label>
+              <input id="fDni" name="dni" type="text" inputmode="numeric" />
+            </div>
+
+            <div class="field">
+              <label for="fEdad">Edad</label>
+              <input id="fEdad" name="edad" type="number" min="0" max="120" />
+            </div>
+
+            <div class="field">
+              <label for="fProfesion">Profesión</label>
+              <input id="fProfesion" name="profesion" type="text" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="fIndicaciones">Indicaciones Médicas</label>
+            <textarea id="fIndicaciones" name="indicaciones_medicas" rows="3"></textarea>
+          </div>
+
+          <div class="grid2">
+            <div class="field">
+              <label for="fDireccion">Dirección</label>
+              <input id="fDireccion" name="direccion" type="text" />
+            </div>
+
+            <div class="field">
+              <label for="fRecojo">Lugar de recojo</label>
+              <select id="fRecojo" name="lugar_recojo">
+                <option value="">Selecciona un punto (opcional)</option>
+                <option>Los Olivos</option>
+                <option>San Borja</option>
+                <option>Pte Primavera</option>
+                <option>Pte Benavides</option>
+                <option>Pte Atocongo</option>
+                <option>Pte Alipio</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div class="field">
+              <label for="fServicio">Servicio elegido</label>
+              <input id="fServicio" name="servicio_elegido" type="text" value="Paquete premium" readonly />
+            </div>
+
+            <div class="field">
+              <label for="fDia">Día del viaje</label>
+              <input id="fDia" name="dia_viaje" type="text" value="17 de enero" readonly />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn primary" id="btnEnviar">
+              Enviar
+            </button>
+            <button type="button" class="btn ghost" id="btnBackToDecision">
+              Volver
+            </button>
+          </div>
+
+          <div class="tiny muted">
+            * Requeridos: nombre, celular, correo. El resto es opcional.
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="muted">Elaborado por Marcelo 💻</span>
+    </footer>
+    <audio id="bgMusic" preload="auto" src="./assets/musica.mp3"></audio>
+  </main>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
