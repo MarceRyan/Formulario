@@ -421,7 +421,7 @@ if (btnSi) {
 
     // Readonly defaults
     if (fServicio) fServicio.value = "Paquete premium";
-    if (fDia) fDia.value = "17 de enero";
+    if (fDia) fDia.value = "18 de enero";
 
     // Resumen (si existe)
     if (summaryName) summaryName.textContent = fNombre.value || "—";
@@ -562,3 +562,4 @@ function showWithReveal(el) {
   bootDecision(); // ✅
 });
 })();
+
